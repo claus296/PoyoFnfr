@@ -70,6 +70,9 @@ local eventFuncs = {
 	["Camera Flash"] = function()
 		weeks:doFlash()
 	end,
+	["bg alpha"] = function() --IM SORRY I KNOW IT'S TERRIBLE IM JUST LAZY
+		weeks:doFlash()
+	end,
 	["Note Spin"] = function(orientation, speed)
 		spin = 3.145
 		speed = 0.3

@@ -23,7 +23,9 @@ return {
         love.graphics.push()
 			love.graphics.translate(cam.x * 0.9, cam.y * 0.9)
 
+            love.graphics.setColor(1,1,1,BgAlpha)
 			stageImages[1]:draw()
+            love.graphics.setColor(1,1,1,1)
 
 			girlfriend:draw()
 		love.graphics.pop()

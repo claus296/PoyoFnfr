@@ -26,6 +26,7 @@ return {
 		pauseColor = {129, 100, 223}
 		weeks:enter()
 		stages["stage"]:enter()
+		BgAlpha = 1
 
 		week = 1
 
@@ -76,6 +77,40 @@ return {
 		weeks:update(dt)
 		stages["stage"]:update(dt)
 
+		if song == 3 then
+			if musicTime >= 34000 then
+				BgAlpha = 0
+			end
+			if musicTime >= 34250 then
+				BgAlpha = 1
+			end
+			if musicTime >= 50000 then
+				BgAlpha = 0.5
+			end
+			if musicTime >= 58000 then
+				BgAlpha = 1
+			end
+			if musicTime >= 65000 then
+				BgAlpha = 0
+			end
+			if musicTime >= 66000 then
+				BgAlpha = 1
+			end
+			if musicTime >= 82000 then
+				BgAlpha = 0.5
+			end
+			if musicTime >= 97500 then
+				BgAlpha = 1
+			end
+			if musicTime >= 164000 then
+				BgAlpha = 0.75
+			end
+			if musicTime >= 182000 then
+				BgAlpha = 1
+			end
+		end
+
+
 		if health >= 80 then
 			if enemyIcon:getAnimName() == "daddy dearest" then
 				weeks:setIcon("enemy", "daddy dearest losing")
@@ -125,7 +160,9 @@ return {
 			love.graphics.scale(extraCamZoom.sizeX, extraCamZoom.sizeY)
 			love.graphics.scale(cam.sizeX, cam.sizeY)
 
-			stages["stage"]:draw()
+			if musicTime <= 216000 then
+				stages["stage"]:draw()
+			end
 			weeks:drawRating(0.9)
 		love.graphics.pop()
 		
@@ -138,6 +175,8 @@ return {
 
 	leave = function(self)
 		stages["stage"]:leave()
+		BgAlpha = 1
+
 		weeks:leave()
 	end
 }
