@@ -1371,7 +1371,11 @@ return {
 								end
 							else
 								if not settings.disableEnemyScore then
-									enemyScore = enemyScore + 300
+									if love.math.random(1,4) == 4 then
+										enemyScore = enemyScore + 125
+									else
+										enemyScore = enemyScore + 300
+									end
 								end
 								if useAltAnims then
 									self:safeAnimate(enemy, curAnim .. " alt", false, 2)
