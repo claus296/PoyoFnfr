@@ -6,17 +6,32 @@ return {
 
         enemy = Character.poyo(0,0)
 
-        girlfriend.x, girlfriend.y = -200, -445
-        enemy.x, enemy.y = -550, -500
-        boyfriend.x, boyfriend.y = 260, -125
+        girlfriend = love.filesystem.load("sprites/city/newGf.lua")()
+
+        fakeBoyfriend = love.filesystem.load("sprites/boyfriend.lua")()
+
+        speaker = love.filesystem.load("sprites/city/speaker.lua")()
+
+        girlfriend.x, girlfriend.y = 100, -260
+        speaker.x, speaker.y = 100, -260
+        enemy.x, enemy.y = -775, -500
+        boyfriend.x, boyfriend.y = -200, -390
+        fakeBoyfriend.x, fakeBoyfriend.y = 260, -125
+
+        girlfriend.sizeX, girlfriend.sizeY = 0.7
+
+        speaker:animate("anim", true)
+
     end,
 
     load = function()
-
+        cam.x, cam.y = -150, 156
     end,
 
     update = function(self, dt)
+        speaker:update(dt)
 
+		speaker:setAnimSpeed(14.4 / (60 / bpm) * girlfriendSpeedMultiplier)
     end,
 
     draw = function()
@@ -27,12 +42,16 @@ return {
 			stageImages[1]:draw()
             love.graphics.setColor(1,1,1,1)
 
+            love.graphics.setColor(1,1,1,CharAlpha)
+            speaker:draw()
 			girlfriend:draw()
 		love.graphics.pop()
 		love.graphics.push()
 			love.graphics.translate(cam.x, cam.y)
 
 			enemy:draw()
+            love.graphics.setColor(1,1,1,1)
+            
 			boyfriend:draw()
 		love.graphics.pop()
 		love.graphics.push()

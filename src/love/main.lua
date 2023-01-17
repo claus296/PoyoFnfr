@@ -184,12 +184,12 @@ function love.load()
 
 	-- Load menus
 	menu = require "states.menu.menu"
-	menuWeek = require "states.menu.menuWeek"
 	menuSelect = require "states.menu.menuSelect"
 	menuFreeplay = require "states.menu.menuFreeplay"
 	menuChooseFreeplay = require "states.menu.menuChooseFreeplay"
 	menuSettings = require "states.menu.menuSettings"
 	menuCredits = require "states.menu.menuCredits"
+	menuStory = require "weeks.week1"
 
 	gjlogin = require "states.gjlogin"
 
@@ -222,11 +222,6 @@ function love.load()
 	weekData = {
 		require "weeks.week1",
 		require "weeks.week2",
-		require "weeks.week3",
-		require "weeks.week4",
-		require "weeks.week5",
-		require "weeks.week6",
-		require "weeks.week7",
 	}
 	weekDesc = { -- Add your week description here
 		"DADDY DEAREST",
@@ -247,51 +242,9 @@ function love.load()
 			}
 		},
 		{
-			"Week 2",
+			"Epic Legacy",
 			{
-				"Spookeez",
-				"South",
-				"Monster"
-			}
-		},
-		{
-			"Week 3",
-			{
-				"Pico",
-				"Philly Nice",
-				"Blammed"
-			}
-		},
-		{
-			"Week 4",
-			{
-				"Satin Panties",
-				"High",
-				"M.I.L.F"
-			}
-		},
-		{
-			"Week 5",
-			{
-				"Cocoa",
-				"Eggnog",
-				"Winter Horrorland"
-			}
-		},
-		{
-			"Week 6",
-			{
-				"Senpai",
-				"Roses",
-				"Thorns"
-			},
-		},
-		{
-			"Week 7",
-			{
-				"Ugh",
-				"Guns",
-				"Stress"
+				"Epic Legacy"
 			}
 		}
 	}

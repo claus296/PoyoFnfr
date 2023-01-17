@@ -23,6 +23,7 @@ return {
 	enter = function(self, from)
 		local boyfriend = fakeBoyfriend or boyfriend
 		died = true
+		fakeCountdownFade = 0
 		achievementProgress["death"] = achievementProgress["death"] + 1
 		if achievementProgress["death"] >= 100 and gamejoltLogin["useGamejolt"] then
 			gamejolt.giveTrophy(175140)

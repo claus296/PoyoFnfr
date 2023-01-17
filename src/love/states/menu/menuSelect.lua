@@ -94,11 +94,19 @@ return {
 
         function confirmFunc()
             if menuButton == 1 then
+                music[1]:stop()
+                songNum = 1
+    
                 status.setLoading(true)
+
                 graphics.fadeOut(
-                    0.3,
+                    0.5,
                     function()
-                        Gamestate.switch(menuWeek)
+    
+                        storyMode = true
+    
+                        Gamestate.switch(menuStory)
+    
                         status.setLoading(false)
                     end
                 )

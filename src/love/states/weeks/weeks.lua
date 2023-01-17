@@ -81,6 +81,11 @@ local eventFuncs = {
 		Timer.tween(speed, boyfriendArrows[2], {orientation = boyfriendArrows[2].orientation + spin}, "out-expo")
 		Timer.tween(speed, boyfriendArrows[3], {orientation = boyfriendArrows[3].orientation + spin}, "out-expo")
 		Timer.tween(speed, boyfriendArrows[4], {orientation = boyfriendArrows[4].orientation + spin}, "out-expo")
+
+		Timer.tween(speed, enemyArrows[1], {orientation = enemyArrows[1].orientation + spin}, "out-expo")
+		Timer.tween(speed, enemyArrows[2], {orientation = enemyArrows[2].orientation + spin}, "out-expo")
+		Timer.tween(speed, enemyArrows[3], {orientation = enemyArrows[3].orientation + spin}, "out-expo")
+		Timer.tween(speed, enemyArrows[4], {orientation = enemyArrows[4].orientation + spin}, "out-expo")
 	end,
 	["Set GF Speed"] = function(speed)
 		--girlfriendSpeedMultiplier = tonumber(speed) or 1
@@ -580,6 +585,20 @@ return {
 				elseif noteType == 3 or noteType == 7 then
 					sprite = sprites.rightArrow
 				end
+
+				for j = 1, #boyfriendNotes[1] do 
+					boyfriendNotes[1][j].orientation = boyfriendArrows[1].orientation
+				end
+				for j = 1, #boyfriendNotes[2] do 
+					boyfriendNotes[2][j].orientation = boyfriendArrows[1].orientation
+				end
+				for j = 1, #boyfriendNotes[3] do 
+					boyfriendNotes[3][j].orientation = boyfriendArrows[1].orientation
+				end
+				for j = 1, #boyfriendNotes[4] do 
+					boyfriendNotes[4][j].orientation = boyfriendArrows[1].orientation
+				end
+
 
 				if not pixel then
 					if mustHitSection then
@@ -1240,7 +1259,11 @@ return {
 						Timer.cancel(camTimer)
 					end
 					if events[i].mustHitSection then
-						camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x - 75, y = -boyfriend.y - 25}, "out-quad")
+						if curPlayer == "newBF" then
+							camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x - 355, y = -boyfriend.y - 255}, "out-quad")
+						else
+							camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x - 75, y = -boyfriend.y - 25}, "out-quad")
+						end
 					else
 						if curEnemy == "pico" then
 							camTimer = Timer.tween(1.25, cam, {x = -enemy.x - 75, y = -enemy.y - 50}, "out-quad")
@@ -1250,6 +1273,8 @@ return {
 							camTimer = Timer.tween(1.25, cam, {x = -enemy.x - 500, y = -enemy.y - 400}, "out-quad")
 						elseif curEnemy == "tankman" then
 							camTimer = Timer.tween(1.25, cam, {x = -enemy.x + 75, y = -enemy.y - 100}, "out-quad")
+						elseif curEnemy == "poyo" then
+							camTimer = Timer.tween(1.25, cam, {x = -enemy.x - 600, y = -enemy.y - 275}, "out-quad")
 						else
 							camTimer = Timer.tween(1.25, cam, {x = -enemy.x - 300, y = -enemy.y - 275}, "out-quad")
 						end

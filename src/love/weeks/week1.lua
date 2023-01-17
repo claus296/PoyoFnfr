@@ -27,8 +27,15 @@ return {
 		weeks:enter()
 		stages["stage"]:enter()
 		BgAlpha = 1
+		CharAlpha = 1
+		fakeCountdownFade = 0
 
 		week = 1
+
+		fakeCountdown = love.filesystem.load("sprites/countdown.lua")()
+
+		fakeCountdown.sizeX, fakeCountdown.sizeY = 0.9
+		fakeCountdown.x, fakeCountdown.y = 700, 350
 
 		song = songNum
 		difficulty = songAppend
@@ -76,6 +83,41 @@ return {
 	update = function(self, dt)
 		weeks:update(dt)
 		stages["stage"]:update(dt)
+		if song == 1 then
+			if musicTime >= 91448.275862069 then
+				if musicTime <= 91562.0689655172 then
+					fakeCountdown:animate("ready", false)
+					fakeCountdownFade = fakeCountdownFade + 0.25
+				end
+			end
+			if musicTime >= 91648.275862069 then
+				if musicTime <= 91762.0689655172 then
+					fakeCountdownFade = fakeCountdownFade - 0.25
+				end
+			end
+			if musicTime >= 91862.0689655172 then
+				if musicTime <= 91975.8620689655 then
+					fakeCountdown:animate("set", false)
+					fakeCountdownFade = fakeCountdownFade + 0.25
+				end
+			end
+			if musicTime >= 92062.0689655172 then
+				if musicTime <= 92275.8620689655 then
+					fakeCountdownFade = fakeCountdownFade - 0.25
+				end
+			end
+			if musicTime >= 92275.8620689655 then
+				if musicTime <= 92589.6551724138 then
+					fakeCountdown:animate("go", false)
+					fakeCountdownFade = fakeCountdownFade + 0.25
+				end
+			end
+			if musicTime >= 92689.6551724138 then
+				if musicTime <= 92989.6551724138 then
+					fakeCountdownFade = fakeCountdownFade - 0.25
+				end
+			end
+		end
 
 		if song == 3 then
 			if musicTime >= 34000 then
@@ -92,9 +134,11 @@ return {
 			end
 			if musicTime >= 65000 then
 				BgAlpha = 0
+				CharAlpha = 0
 			end
 			if musicTime >= 66000 then
 				BgAlpha = 1
+				CharAlpha = 1
 			end
 			if musicTime >= 82000 then
 				BgAlpha = 0.5
@@ -160,7 +204,11 @@ return {
 			love.graphics.scale(extraCamZoom.sizeX, extraCamZoom.sizeY)
 			love.graphics.scale(cam.sizeX, cam.sizeY)
 
-			if musicTime <= 216000 then
+			if song == 3 then
+				if musicTime <= 216000 then
+					stages["stage"]:draw()
+				end
+			else
 				stages["stage"]:draw()
 			end
 			weeks:drawRating(0.9)
@@ -170,12 +218,19 @@ return {
 		weeks:drawHealthBar()
 		if not paused then
 			weeks:drawUI()
+			if song == 1 then
+				love.graphics.setColor(1,1,1,fakeCountdownFade)
+				fakeCountdown:draw()
+				love.graphics.setColor(1,1,1,1)
+			end
 		end
 	end,
 
 	leave = function(self)
 		stages["stage"]:leave()
 		BgAlpha = 1
+		fakeCountdownFade = 0
+		fakeCountdown = nil
 
 		weeks:leave()
 	end
