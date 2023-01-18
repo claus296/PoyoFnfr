@@ -19,7 +19,7 @@ function character.poyo(x, y)
 
     char:animate("idle", false)
 
-    char.colours = {175,102,206}
+    char.colours = {255,180,200}
 
     return char
 end

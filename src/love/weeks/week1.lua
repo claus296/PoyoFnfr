@@ -29,6 +29,10 @@ return {
 		BgAlpha = 1
 		CharAlpha = 1
 		fakeCountdownFade = 0
+		newGf = true
+
+		cam.sizeX, cam.sizeY = 0.8, 0.8
+		camScale.x, camScale.y = 0.8, 0.8
 
 		week = 1
 
@@ -40,7 +44,8 @@ return {
 		song = songNum
 		difficulty = songAppend
 
-		weeks:setIcon("enemy", "poyo")
+		weeks:setIcon("enemy", "daddy dearest")
+		weeks:setIcon("boyfriend", "skid and pump")
 
 		self:load()
 	end,
@@ -113,8 +118,8 @@ return {
 				end
 			end
 			if musicTime >= 92689.6551724138 then
-				if musicTime <= 92989.6551724138 then
-					fakeCountdownFade = fakeCountdownFade - 0.25
+				if musicTime <= 93989.6551724138 then
+					fakeCountdownFade = fakeCountdownFade - 0.15
 				end
 			end
 		end
@@ -164,8 +169,16 @@ return {
 				weeks:setIcon("enemy", "daddy dearest")
 			end
 		end
-
-		if not (countingDown or graphics.isFading()) and not (enemyScore > score) and not (inst:getDuration() > musicTime/1000) and not paused then
+		if health <= 20 then
+			if boyfriendIcon:getAnimName() == "skid and pump" then
+				weeks:setIcon("boyfriend", "skid and pump losing")
+			end
+		else
+			if boyfriendIcon:getAnimName() == "skid and pump losing" then
+				weeks:setIcon("boyfriend", "skid and pump")
+			end
+		end
+		if not (countingDown or graphics.isFading()) and not (scoreDeath) and not (inst:getDuration() > musicTime/1000) and not paused then
 			if storyMode and song < 3 then
 				if score > highscores[weekNum-1][difficulty].scores[song] then
 					highscores[weekNum-1][difficulty].scores[song] = score
@@ -215,14 +228,19 @@ return {
 		love.graphics.pop()
 		
 		weeks:drawTimeLeftBar()
-		weeks:drawHealthBar()
+		if not paused then
+			weeks:drawHealthBar()
+		end
 		if not paused then
 			weeks:drawUI()
-			if song == 1 then
-				love.graphics.setColor(1,1,1,fakeCountdownFade)
-				fakeCountdown:draw()
-				love.graphics.setColor(1,1,1,1)
-			end
+		end
+		if song == 1 then
+			love.graphics.setColor(1,1,1,fakeCountdownFade)
+			fakeCountdown:draw()
+			love.graphics.setColor(1,1,1,1)
+		end
+		if paused then
+			weeks:drawHealthBar()
 		end
 	end,
 
@@ -231,6 +249,7 @@ return {
 		BgAlpha = 1
 		fakeCountdownFade = 0
 		fakeCountdown = nil
+		newGf = false
 
 		weeks:leave()
 	end

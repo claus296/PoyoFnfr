@@ -136,7 +136,7 @@ function love.load()
 	input = require "input"
 
 	music = {
-		waveAudio:newSource("songs/misc/menu.ogg", "stream"),
+		waveAudio:newSource("songs/summer-sunset/inst.ogg", "stream"),
 		--love.audio.newSource("songs/misc/menu.ogg", "stream"),
 		vol = 1
 	}
@@ -184,12 +184,12 @@ function love.load()
 
 	-- Load menus
 	menu = require "states.menu.menu"
+	menuWeek = require "states.menu.menuWeek"
 	menuSelect = require "states.menu.menuSelect"
 	menuFreeplay = require "states.menu.menuFreeplay"
 	menuChooseFreeplay = require "states.menu.menuChooseFreeplay"
 	menuSettings = require "states.menu.menuSettings"
 	menuCredits = require "states.menu.menuCredits"
-	menuStory = require "weeks.week1"
 
 	gjlogin = require "states.gjlogin"
 
@@ -224,17 +224,12 @@ function love.load()
 		require "weeks.week2",
 	}
 	weekDesc = { -- Add your week description here
-		"DADDY DEAREST",
-		"SPOOKY MONTH",
-		"PICO",
-		"MOMMY MUST MURDER",
-		"RED SNOW",
-		"HATING SIMULATOR FT. MOAWLING",
-		"TANKMAN"
+		"",
+		""
 	}
 	weekMeta = { -- Add/remove weeks here
 		{
-			"Week 1",
+			"Vs Poyo",
 			{
 				"Summer Sunset",
 				"Energizer",

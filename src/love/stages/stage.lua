@@ -12,13 +12,14 @@ return {
 
         speaker = love.filesystem.load("sprites/city/speaker.lua")()
 
-        girlfriend.x, girlfriend.y = 100, -260
+        girlfriend.x, girlfriend.y = 100, -220
         speaker.x, speaker.y = 100, -260
         enemy.x, enemy.y = -775, -500
-        boyfriend.x, boyfriend.y = -200, -390
+        boyfriend.x, boyfriend.y = -200, -480
         fakeBoyfriend.x, fakeBoyfriend.y = 260, -125
 
-        girlfriend.sizeX, girlfriend.sizeY = 0.7
+        girlfriend.sizeX, girlfriend.sizeY = 0.6
+        boyfriend.sizeX, boyfriend.sizeY = 1.2
 
         speaker:animate("anim", true)
 
@@ -62,6 +63,7 @@ return {
 
     leave = function()
         stageImages[1] = nil
+        speaker = nil
 
     end
 }

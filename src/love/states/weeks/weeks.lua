@@ -134,6 +134,7 @@ local eventFuncs = {
 missCounter = 0
 noteCounter = 0
 altScore = 0
+scoreDeath = false
 
 ratingTimers = {}
 
@@ -1260,7 +1261,7 @@ return {
 					end
 					if events[i].mustHitSection then
 						if curPlayer == "newBF" then
-							camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x - 355, y = -boyfriend.y - 255}, "out-quad")
+							camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x - 355, y = -boyfriend.y - 340}, "out-quad")
 						else
 							camTimer = Timer.tween(1.25, cam, {x = -boyfriend.x - 75, y = -boyfriend.y - 25}, "out-quad")
 						end
@@ -1328,6 +1329,7 @@ return {
 					if picoSpeaker then picoSpeaker:animate("idle", false) end
 	
 					girlfriend:setAnimSpeed(14.4 / (60 / bpm) * girlfriendSpeedMultiplier)
+					if newGf then girlfriend:setAnimSpeed(14.4 / (110 / bpm) * girlfriendSpeedMultiplier) end
 					if picoSpeaker then picoSpeaker:setAnimSpeed(14.4 / (60 / bpm) * girlfriendSpeedMultiplier) end
 				end
 				if spriteTimers[2] == 0 then
@@ -1749,7 +1751,10 @@ return {
 				end
 
 				if enemyScore > score and not (inst:getDuration() > musicTime/1000) then
-					Gamestate.push(gameOver)
+					if not settings.practiceMode and not settings.botplay then
+						scoreDeath = true
+						Gamestate.push(gameOver)
+					end
 				end
 
 				enemyIcon.x = 425 - health * 10

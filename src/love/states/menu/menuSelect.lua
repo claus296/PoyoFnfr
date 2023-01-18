@@ -33,37 +33,12 @@ return {
         options.sizeX, options.sizeY = 0.75, 0.75
         credits.sizeX, credits.sizeY = 0.75, 0.75
 
-        story.x, freeplay.x, options.x, credits.x = -295, -320, -345, -370
-        --Timer.tween(1, story, {y = -200}, "out-expo")
-        --Timer.tween(1, freeplay, {y = -50}, "out-expo")
-        --Timer.tween(1, options, {y = 100}, "out-expo")
-        --Timer.tween(1, credits, {y = 250}, "out-expo")
+        story.x, freeplay.x, options.x, credits.x = -500, -500, -500, -500
+        Timer.tween(1, story, {x = -295}, "out-expo")
+        Timer.tween(1, freeplay, {x = -320}, "out-expo")
+        Timer.tween(1, options, {x = -345}, "out-expo")
+        Timer.tween(1, credits, {x = -370}, "out-expo")
         --Timer.tween(0.88, cam, {y = 35, sizeX = 1.1, sizeY = 1.1}, "out-quad")
-
-        function loopbgfloat()
-            Timer.tween(
-                3,
-                menuDetails.selectBG,
-                {
-                    y = menuDetails.selectBG.y + 6
-                },
-                "in-out-quad",
-                function()
-                    Timer.tween(
-                        3,
-                        menuDetails.selectBG,
-                        {
-                            y = menuDetails.selectBG.y - 6
-                        },
-                        "in-out-quad",
-                        function()
-                            loopbgfloat()
-                        end
-                    )
-                end
-            )
-        end
-        loopbgfloat()
 
         function changeSelect()
             if menuButton == 1 then
@@ -94,23 +69,15 @@ return {
 
         function confirmFunc()
             if menuButton == 1 then
-                music[1]:stop()
-                songNum = 1
-    
                 status.setLoading(true)
-
                 graphics.fadeOut(
-                    0.5,
+                    0.3,
                     function()
-    
-                        storyMode = true
-    
-                        Gamestate.switch(menuStory)
-    
+                        Gamestate.switch(menuWeek)
                         status.setLoading(false)
                     end
                 )
-                Timer.tween(0.9, story, {y = 0}, "out-expo")
+                Timer.tween(0.9, story, {x = 0}, "out-expo")
                 Timer.tween(0.9, freeplay, {y = 700}, "out-expo")
                 Timer.tween(0.9, options, {y = 700}, "out-expo")
                 Timer.tween(0.9, credits, {y = 700}, "out-expo")
@@ -175,6 +142,8 @@ return {
         story:update(dt)
         freeplay:update(dt)
         credits:update(dt)
+
+        selectBG.y = math.sin(love.timer.getTime() * 1.5) * 0.9
 
 		if not graphics.isFading() then
 			if input:pressed("up") then
