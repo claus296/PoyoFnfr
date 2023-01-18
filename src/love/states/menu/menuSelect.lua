@@ -16,8 +16,7 @@ return {
         
 		menuButton = 1
 		songNum = 0
-        selectBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/selectBG")))
-        selectBGOverlay = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/selectBGOverlay")))
+        selectBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/menuBG")))
 
         options = love.filesystem.load("sprites/menu/menuButtons.lua")()
         story = love.filesystem.load("sprites/menu/menuButtons.lua")()
@@ -182,7 +181,6 @@ return {
             love.graphics.pop()
             love.graphics.push()
                 love.graphics.translate(menuDetails.selectBGOverlay.x, menuDetails.selectBGOverlay.y)
-                selectBGOverlay:draw()
             love.graphics.pop()
             love.graphics.push()
                 graphics.setColor(0,0,0)

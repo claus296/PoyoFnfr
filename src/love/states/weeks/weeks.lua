@@ -1630,6 +1630,10 @@ return {
 										notMissed[noteNum] = false
 
 										if girlfriend:isAnimName("sad") then if combo >= 5 then self:safeAnimate(girlfriend, "sad", true, 1) end end
+										
+										if curPlayer ~= "newBF" then
+											self:safeAnimate(boyfriend, "miss " .. curAnim, false, 3)
+										end
 
 										hitSick = false
 

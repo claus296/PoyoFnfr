@@ -102,6 +102,8 @@ function love.load()
 
 	curMusicBeat = 0
 
+	BEASTMODE = false
+
 	if not love.filesystem.getInfo("ratEAT.png") then
 		ratEat = love.image.newImageData("fonts/ratEAT.png")
 		ratEat:encode("png", "ratEAT.png")
@@ -163,14 +165,8 @@ function love.load()
 
 	-- Load stages
 	stages = {
-		["stage"] = require "stages.stage",
-		["hauntedHouse"] = require "stages.hauntedHouse",
 		["city"] = require "stages.city",
-		["sunset"] = require "stages.sunset",
-		["mall"] = require "stages.mall",
-		["school"] = require "stages.school",
-		["evilSchool"] = require "stages.evil-school",
-		["tank"] = require "stages.tank",
+		--["cityOld"] = require "stages.cityOld",
 	}
 
 	mods = {
@@ -178,9 +174,6 @@ function love.load()
 		modNames = {},
 		WeekData = {}
 	}
-
-	modloader = require "modules.modloader"
-	modloader.load()
 
 	-- Load menus
 	menu = require "states.menu.menu"
@@ -221,7 +214,7 @@ function love.load()
 	-- Load week data
 	weekData = {
 		require "weeks.week1",
-		require "weeks.week2",
+		--require "weeks.week2",
 	}
 	weekDesc = { -- Add your week description here
 		"",
@@ -234,12 +227,6 @@ function love.load()
 				"Summer Sunset",
 				"Energizer",
 				"Epic"
-			}
-		},
-		{
-			"Epic Legacy",
-			{
-				"Epic Legacy"
 			}
 		}
 	}

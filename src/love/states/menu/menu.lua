@@ -38,6 +38,13 @@ return {
 			"out-quad"
 		)
 		titleBG = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/titleBG")))
+
+        enter = love.filesystem.load("sprites/menu/titleEnter.lua")()
+
+		enter.x, enter.y = 250, 275
+
+		enter:animate("anim", true)
+
 		changingMenu = false
 		logo = paths.sprite(-800, -450, "logoBumpin")
    		logo:addByPrefix("bump", "logo bumpin", 24, false)
@@ -91,12 +98,18 @@ return {
 	update = function(self, dt)
 		girlfriendTitle:update(dt)
 		logo:update(dt)
+		enter:update(dt)
+
+		if input:pressed("beast") then
+			BEASTMODE = true
+		end
 
 		music[1]:updateBeat()
 
 		if not graphics.isFading() then
 			if input:pressed("confirm") then
-				
+				enter:animate("pressed", true)
+
 				if not changingMenu then
 					audio.playSound(confirmSound)
 					changingMenu = true
@@ -130,16 +143,17 @@ return {
 				love.graphics.push()
 					love.graphics.translate(menuDetails.titleBG.x, menuDetails.titleBG.y)
 					titleBG:draw()
+					enter:draw()
 				love.graphics.pop()
 				love.graphics.push()
 					love.graphics.scale(0.9, 0.9)
 					love.graphics.translate(menuDetails.titleLogo.x, menuDetails.titleLogo.y)
-					logo:draw()
+		
 				love.graphics.pop()
 				love.graphics.push()
 					love.graphics.scale(0.9, 0.9)
 					--love.graphics.translate(menuDetails.girlfriendTitle.x, menuDetails.girlfriendTitle.y)
-					girlfriendTitle:draw()
+			
 				love.graphics.pop()
 				love.graphics.push()
 					graphics.setColor(0, 0, 0, 0.9)

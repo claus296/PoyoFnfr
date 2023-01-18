@@ -24,6 +24,32 @@ function character.poyo(x, y)
     return char
 end
 
+function character.poyoOld(x, y)
+    curEnemy = "poyoOld"
+    local char = paths.sprite(x or 0, y or 0, "city-old/poyolmao")
+    char:addByPrefix("idle", "Idle", 16, false)
+
+    char:addByPrefix("left", "Right", 8, false)
+    char:addByPrefix("right", "Left", 8, false)
+    char:addByPrefix("up", "Up", 8, false)
+    char:addByPrefix("down", "Down", 8, false)
+
+    char:addOffset("idle",  0, 0      )
+
+    char:addOffset("left",  178, -9   )
+    char:addOffset("right",  53, -6   )
+    char:addOffset("up",     94, -29  )
+    char:addOffset("down",   -9, -72  )
+
+    char:animate("idle", false)
+
+    char.flipX = true
+
+    char.colours = {255,180,200}
+
+    return char
+end
+
 function character.boyfriend(x, y)
     curPlayer = "newBF"
     local char = paths.sprite(x or 0, y or 0, "city/newbfpoyo")

@@ -55,8 +55,8 @@ settingsDescriptions1 = { -- The big spaces are so it lines up lol
     "Noteskins" ..
     "\n       \"Noteskins\" ",
 
-    "Dissable Opponent Score" ..
-    "\n       \"Dissable the Opponent Score mechanic\" ",
+    "Disable Opponent Score" ..
+    "\n       \"Disable the Opponent Score mechanic\" ",
 
     "Flashing Lights" ..
     "\n       \"Flashing Lights\" Enable/Disable flashing lights",
@@ -379,7 +379,7 @@ return {
                     love.graphics.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\nScroll Underlay Transparency = " .. tostring(settings.scrollUnderlayTrans), -628, -360)
                     love.graphics.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHitsounds = " .. tostring(settings.Hitsounds), -628, -360)
                     love.graphics.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteskin = " .. tostring(noteskins[settings.noteSkins]), -628, -360)
-                    love.graphics.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDissable Opponent Score = " .. tostring(settings.disableEnemyScore), -628, -360)
+                    love.graphics.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDisable Opponent Score = " .. tostring(settings.disableEnemyScore), -628, -360)
                     love.graphics.print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlashing Lights = " .. tostring(settings.flashinglights), -628, -337)
                 elseif settingsMenuState == 3 then
                     love.graphics.print("Hardware Compression = " .. tostring(settings.hardwareCompression) .. " " .. isRestartNeeded, -628, -300) 

@@ -25,7 +25,7 @@ return {
 	enter = function(self, from, songNum, songAppend)
 		pauseColor = {129, 100, 223}
 		weeks:enter()
-		stages["stage"]:enter()
+		stages["city"]:enter()
 		BgAlpha = 1
 		CharAlpha = 1
 		fakeCountdownFade = 0
@@ -52,10 +52,14 @@ return {
 
 	load = function(self)
 		weeks:load()
-		stages["stage"]:load()
+		stages["city"]:load()
 
 		if song == 3 then
-			inst = waveAudio:newSource("songs/epic/inst.ogg", "stream")
+			if BEASTMODE then
+				inst = waveAudio:newSource("songs/MR-BEAST/inst.ogg", "stream")
+			else
+				inst = waveAudio:newSource("songs/epic/inst.ogg", "stream")
+			end
 			voices = waveAudio:newSource("songs/epic/voices.ogg", "stream")
 		elseif song == 2 then
 			inst = waveAudio:newSource("songs/energizer/inst.ogg", "stream")
@@ -87,7 +91,7 @@ return {
 
 	update = function(self, dt)
 		weeks:update(dt)
-		stages["stage"]:update(dt)
+		stages["city"]:update(dt)
 		if song == 1 then
 			if musicTime >= 91448.275862069 then
 				if musicTime <= 91562.0689655172 then
@@ -219,10 +223,10 @@ return {
 
 			if song == 3 then
 				if musicTime <= 216000 then
-					stages["stage"]:draw()
+					stages["city"]:draw()
 				end
 			else
-				stages["stage"]:draw()
+				stages["city"]:draw()
 			end
 			weeks:drawRating(0.9)
 		love.graphics.pop()
@@ -245,11 +249,12 @@ return {
 	end,
 
 	leave = function(self)
-		stages["stage"]:leave()
+		stages["city"]:leave()
 		BgAlpha = 1
 		fakeCountdownFade = 0
 		fakeCountdown = nil
 		newGf = false
+		BEASTMODE = false
 
 		weeks:leave()
 	end

@@ -19,48 +19,33 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 local difficulty
 
+local stageBack, stageFront, curtains
+
 return {
 	enter = function(self, from, songNum, songAppend)
-		pauseColor = {30, 45, 60}
-
+		pauseColor = {129, 100, 223}
 		weeks:enter()
-		stages.hauntedHouse:enter()
+		stages["cityOld"]:enter()
+
+		cam.sizeX, cam.sizeY = 0.8, 0.8
+		camScale.x, camScale.y = 0.8, 0.8
 
 		week = 2
 
 		song = songNum
 		difficulty = songAppend
 
-		cam.sizeX, cam.sizeY = 1.1, 1.1
-		camScale.x, camScale.y = 1.1, 1.1
-
-		sounds["thunder"] = {
-			love.audio.newSource("sounds/week2/thunder1.ogg", "static"),
-			love.audio.newSource("sounds/week2/thunder2.ogg", "static")
-		}
-
-		weeks:setIcon("enemy", "skid and pump")
+		weeks:setIcon("enemy", "daddy dearest")
 
 		self:load()
 	end,
 
 	load = function(self)
 		weeks:load()
-		stages.hauntedHouse:load()
+		stages["cityOld"]:load()
 
-		if song == 3 then
-			enemy = Character.monster(0,0)
-			enemy.x, enemy.y = -610, -215
-            weeks:setIcon("enemy", "monster")
-			inst = waveAudio:newSource("songs/week2/monster/inst.ogg", "stream")
-			voices = waveAudio:newSource("songs/week2/monster/voices.ogg", "stream")
-		elseif song == 2 then
-			inst = waveAudio:newSource("songs/week2/south/inst.ogg", "stream")
-			voices = waveAudio:newSource("songs/week2/south/voices.ogg", "stream")
-		else
-			inst = waveAudio:newSource("songs/week2/spookeez/inst.ogg", "stream")
-			voices = waveAudio:newSource("songs/week2/spookeez/voices.ogg", "stream")
-		end
+		inst = waveAudio:newSource("songs/epic-legacy/inst.ogg", "stream")
+		voices = waveAudio:newSource("songs/epic-legacy/voices.ogg", "stream")
 
 		self:initUI()
 
@@ -70,48 +55,26 @@ return {
 	initUI = function(self)
 		weeks:initUI()
 
-		if song == 3 then
-			weeks:generateNotes("songs/week2/monster/" .. difficulty .. ".json")
-		elseif song == 2 then
-			weeks:generateNotes("songs/week2/south/" .. difficulty .. ".json")
-		else
-			weeks:generateNotes("songs/week2/spookeez/" .. difficulty .. ".json")
-		end
+		weeks:generateNotes("songs/epic-legacy/epic-legacy.json")
+		weeks:generateEvents("songs/epic-legacy/epic-legacy.json")
+	
 	end,
 
 	update = function(self, dt)
 		weeks:update(dt)
-		stages["hauntedHouse"]:update(dt)
+		stages["cityOld"]:update(dt)
 
-		if song ~= 3 and musicThres ~= oldMusicThres and math.fmod(absMusicTime, 60000 / bpm) < 100 then
-			if enemy:getAnimName() == "idle" then
-				enemy:setAnimSpeed(14.4 / (120 / bpm))
-			end
-		end
 
-		if song == 3 then
-			if health >= 80 then
-				if enemyIcon:getAnimName() == "monster" then
-					weeks:setIcon("enemy", "monster losing")
-				end
-			else
-				if enemyIcon:getAnimName() == "monster losing" then
-					weeks:setIcon("enemy", "monster")
-				end
+		if health >= 80 then
+			if enemyIcon:getAnimName() == "daddy dearest" then
+				weeks:setIcon("enemy", "daddy dearest losing")
 			end
 		else
-			if health >= 80 then
-				if enemyIcon:getAnimName() == "skid and pump" then
-					weeks:setIcon("enemy", "skid and pump losing")
-				end
-			else
-				if enemyIcon:getAnimName() == "skid and pump losing" then
-					weeks:setIcon("enemy", "skid and pump")
-				end
+			if enemyIcon:getAnimName() == "daddy dearest losing" then
+				weeks:setIcon("enemy", "daddy dearest")
 			end
 		end
-
-		if not (countingDown or graphics.isFading()) and not (inst:getDuration() > musicTime/1000) and not paused then
+		if not (countingDown or graphics.isFading()) and not (scoreDeath) and not (inst:getDuration() > musicTime/1000) and not paused then
 			if storyMode and song < 3 then
 				if score > highscores[weekNum-1][difficulty].scores[song] then
 					highscores[weekNum-1][difficulty].scores[song] = score
@@ -141,6 +104,7 @@ return {
 		end
 
 		weeks:updateUI(dt)
+
 	end,
 
 	draw = function(self)
@@ -149,9 +113,11 @@ return {
 			love.graphics.scale(extraCamZoom.sizeX, extraCamZoom.sizeY)
 			love.graphics.scale(cam.sizeX, cam.sizeY)
 
-			stages.hauntedHouse:draw()
+			stages["cityOld"]:draw()
+		
 			weeks:drawRating(0.9)
 		love.graphics.pop()
+		
 		weeks:drawTimeLeftBar()
 		weeks:drawHealthBar()
 		if not paused then
@@ -160,7 +126,8 @@ return {
 	end,
 
 	leave = function(self)
-		stages.hauntedHouse:leave()
+		stages["cityOld"]:leave()
+
 		weeks:leave()
 	end
 }
