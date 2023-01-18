@@ -91,7 +91,7 @@ switch:
 	@rm -rf build/switch
 	@mkdir -p build/switch/switch/vanilla-engine
 
-	@nacptool --create "Friday Night Funkin' Vanilla Engine" "Guglio & Clothing Hanger" "$(shell cat src/love/version.txt)" build/switch/vanilla-engine.nacp
+	@nacptool --create "VS Poyo" "Claus296" "$(shell cat src/love/version.txt)" build/switch/vanilla-engine.nacp
 
 	@mkdir build/switch/romfs
 	@cp build/lovefile/vanilla-engine.love build/switch/romfs/game.love
