@@ -303,11 +303,7 @@ function love.load()
 	if curOS == "Web" then
 		Gamestate.switch(clickStart)
 	else
-		if notLoggedIn then 
-			Gamestate.switch(gjlogin)
-		else
-			Gamestate.switch(menu)
-		end
+		Gamestate.switch(menu)
 	end
 end
 function love.graphics.setColorF(R,G,B,A)
