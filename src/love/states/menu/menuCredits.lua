@@ -11,6 +11,42 @@ c l o t h i n g h a n g e r - Coding
 Getsaa - Menu Design
 
 
+Mod Port:
+
+Claus296
+
+
+Vs Poyo:
+
+Poyo
+Shekkai47
+bingg
+VR_Core
+Nafari
+almondsdemo
+MaidntlessRT
+PBGFAN
+radivanilla
+Crujikekas
+Ron the Music Boi
+McFadeDev
+Aly-Ant
+linkin
+delta
+missingtex
+beepetheife
+kyson
+Altm
+HyperNine
+
+
+Vs Poyo Special Thanks:
+
+EIT0
+Zatrit
+
+
+
 Funkin' Rewritten:
 
 HTV04
