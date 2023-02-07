@@ -17,18 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ------------------------------------------------------------------------------]]
 __VERSION__ = love.filesystem.read("version.txt") or "UNKNOWN"
-love.graphics.color = {
-	print = function(text,x,y,r,sx,sy,R,G,B,A,ox,oy,kx,ky)
-		graphics.setColorF(R or 255,G or 255,B or 255,A or 1)
-		love.graphics.print(text or "",x or 0,y or 0,r or 0,sx or 1,sy or 1,a or 0,ox or 0,oy or 0,kx or 0,ky or 0)
-		love.graphics.setColorF(255,255,255,1)
-	end,
-	printf = function(text,x,y,limit,align,r,sx,sy,R,G,B,A,ox,oy,kx,ky)
-		graphics.setColorF(R or 255,G or 255,B or 255,A or 1)
-		love.graphics.printf(text or "",x or 0,y or 0,limit or 0,align or 0,r or 0,sx or 1,sy or 1,ox or 0,oy or 0,kx or 0,ky or 0)
-		love.graphics.setColorF(255,255,255,1)
-	end
-}
+__GIT_VERSION__ = love.filesystem.read("git-version.txt") or "UNKNOWN" 
+if love.filesystem.isFused() then function print() end end -- print functions tend the make the game lag when in update functions, so we do this just in
 function uitextf(text,x,y,limit,align,r,sx,sy,ox,oy,kx,ky,alpha)
 	local x = x or 0
 	local y = y or 0
@@ -89,6 +79,7 @@ function uitextflarge(text,x,y,limit,align,hovered,r,sx,sy,ox,oy,kx,ky)
 	love.graphics.printf(text,x,y,limit,align,r,sx,sy,ox,oy,kx,ky)
 end
 volFade = 0
+BEASTMODE = false
 
 function math.round(num)
 	return math.floor(num + 0.5)
@@ -102,8 +93,6 @@ function love.load()
 
 	curMusicBeat = 0
 
-	BEASTMODE = false
-
 	if not love.filesystem.getInfo("ratEAT.png") then
 		ratEat = love.image.newImageData("fonts/ratEAT.png")
 		ratEat:encode("png", "ratEAT.png")
@@ -111,31 +100,31 @@ function love.load()
 
 	-- Load libraries
 	baton = require "lib.baton"
-	--ini = require "lib.ini"
 	lovesize = require "lib.lovesize"
 	Gamestate = require "lib.gamestate"
 	Timer = require "lib.timer"
 	lume = require "lib.lume"
-	gamejolt = require "lib.gamejolt"
 	json = require "lib.json"
-	xml = require "lib.xml"
 	Object = require "lib.classic"
 	waveAudio = require "lib.wave"
+	moonshine = require "lib.moonshine"
+
+	e = require "modules.e"
 
 	status = require "modules.status"
 	audio = require "modules.audio"
 	graphics = require "modules.graphics"
 	modchartHandler = require "modules.modchart"
-	Conductor = require "modules.Conductor"
 	sprite = require "modules.sprite"
 	paths = require "modules.paths"
 	Character = require "modules.Character"
 	require "modules.volume"
 	require "modules.saving"
 	require "modules.camera"
-	require "modules.discord"
 	require "modules.errHandler"
+	CoolUtil = require "modules.CoolUtil"
 	input = require "input"
+	hexrgb = require "modules.hexrgb"
 
 	music = {
 		waveAudio:newSource("songs/summer-sunset/inst.ogg", "stream"),
@@ -165,15 +154,23 @@ function love.load()
 
 	-- Load stages
 	stages = {
-		["city"] = require "stages.city",
-		--["cityOld"] = require "stages.cityOld",
+		["city"] = require "stages.city"
 	}
 
 	mods = {
 		weekMeta = {},
 		modNames = {},
-		WeekData = {}
+		WeekData = {},
+		psychShit = {},
+		psychDataShit = {},
+		psychChars = {},
+		psychStages = {},
+		psychModLocations = {},
+		psychEvents = {},
 	}
+
+	modloader = require "modules.modloader"
+	modloader.load()
 
 	-- Load menus
 	menu = require "states.menu.menu"
@@ -184,10 +181,6 @@ function love.load()
 	menuSettings = require "states.menu.menuSettings"
 	menuCredits = require "states.menu.menuCredits"
 
-	gjlogin = require "states.gjlogin"
-
-	gamejolt.init("757896", "81a95b38f12f5a1c343c6a9e55ac890e")
-
 	-- Load weeks
 	weeks = require "states.weeks.weeks"
 
@@ -197,10 +190,8 @@ function love.load()
 
 	uiTextColour = {1,1,1} -- Set a custom UI colour (Put it in the weeks file to change it for only that week)
 	-- When adding custom colour for the health bar. Make sure to use 255 RGB values. It will automatically convert it for you.
-	healthBarColorPlayer = {49,176,209} -- BF's icon colour
-	healthBarColorEnemy = {165,0,77} -- GF's icon colour
 	pauseColor = {0,0,0} -- Pause screen colour
-	theBalls = {width = 1 * 160}
+	volumeWidth = {width = 160}
 
 	function setDialogue(strList)
 		dialogueList = strList
@@ -211,13 +202,28 @@ function love.load()
 		isDone = false
 	end
 
+	function setDialogueFromTxt(path)
+		dialogueList = {}
+		curDialogue = 1
+		timer = 0
+		progress = 1
+		output = ""
+		isDone = false
+
+		for line in love.filesystem.lines(path) do
+			-- remove the first :
+			line = line:sub(2)
+			local speaker, text = line:match("([^:]+):(.+)")
+			table.insert(dialogueList, {speaker, text})
+		end
+	end
+
 	-- Load week data
 	weekData = {
 		require "weeks.week1",
-		--require "weeks.week2",
 	}
+	
 	weekDesc = { -- Add your week description here
-		"",
 		""
 	}
 	weekMeta = { -- Add/remove weeks here
@@ -279,6 +285,8 @@ function love.load()
 	weekNum = 1
 	songDifficulty = 2
 
+	paused = false
+
 	spriteTimers = {
 		0, -- Girlfriend
 		0, -- Enemy
@@ -298,7 +306,8 @@ function love.load()
 	}
 
 	musicTime = 0
-	health = 0
+	
+	health = 50
 
 	if curOS == "Web" then
 		Gamestate.switch(clickStart)
@@ -309,19 +318,6 @@ end
 function love.graphics.setColorF(R,G,B,A)
 	local R, G, B = R/255 or 1, G/255 or 1, B/255 or 1 -- convert 255 values to work with the setColor
 	graphics.setColor(R,G,B,A or 1) -- Alpha is not converted because using 255 alpha can be strange (I much rather 0-1 values lol)
-end
-if useDiscordRPC then
-	function discordRPC.ready(userId, username, discriminator, avatar)
-		print(string.format("Discord: ready (%s, %s, %s, %s)", userId, username, discriminator, avatar))
-	end
-
-	function discordRPC.disconnected(errorCode, message)
-		print(string.format("Discord: disconnected (%d: %s)", errorCode, message))
-	end
-
-	function discordRPC.errored(errorCode, message)
-		print(string.format("Discord: error (%d: %s)", errorCode, message))
-	end
 end
 
 function love.resize(width, height)
@@ -362,10 +358,40 @@ function love.update(dt)
 		volFade = volFade - 0.4 * delta
 	end
 
-	music[1]:update(dt)
-	music[1]:setVolume(music.vol)
+	if Gamestate.current() ~= gjlogin then
+		music[1]:update(dt)
+		music[1]:setVolume(music.vol)
+	end
 
-	input:update()
+	if paddy then 
+		if paddy.dpad.isDown("gameLeft") then 
+			--love.keypressed("left")
+			input:setPressed("gameLeft")
+			input:setDown("left")
+		end
+		if paddy.dpad.isDown("gameDown") then 
+			--love.keypressed("down")
+			input:setPressed("gameDown")
+			input:setDown("down")
+		end
+		if paddy.dpad.isDown("gameUp") then 
+			--love.keypressed("up")
+			input:setPressed("gameUp")
+			input:setDown("up")
+		end
+		if paddy.dpad.isDown("gameRight") then 
+			--love.keypressed("right")
+			input:setPressed("gameRight")
+			input:setDown("right")
+		end
+		if paddy.dpad.isDown("enter") then 
+			--love.keypressed("return") 
+			input:setDown("confirm")
+		end
+		paddy.update(dt)
+	end
+	
+	input:update(dt)
 
 	if status.getNoResize() then
 		Gamestate.update(dt)
@@ -377,13 +403,6 @@ function love.update(dt)
 		love.graphics.setColor(1, 1, 1) -- Fade effect off
 		graphics.screenBase(love.graphics.getWidth(), love.graphics.getHeight())
 		love.graphics.setFont(font)
-	end
-	if useDiscordRPC then
-		if nextPresenceUpdate < love.timer.getTime() then
-			discordRPC.updatePresence(presence)
-			nextPresenceUpdate = love.timer.getTime() + 2.0
-		end
-		discordRPC.runCallbacks()
 	end
 
 	Timer.update(dt)
@@ -397,11 +416,11 @@ function love.draw()
 		graphics.setColor(1, 1, 1) -- Fade effect on
 		
 		Gamestate.draw()
+		if paddy then paddy.draw() end
 		love.graphics.setColor(1, 1, 1) -- Fade effect off
 		
 		love.graphics.setFont(font)
 		volumeControl()
-		
 		
 	lovesize.finish()
 	
@@ -413,9 +432,7 @@ function love.draw()
 	end
 end
 function love.quit()
-	if useDiscordRPC then
-		discordRPC.shutdown()
-	end
+	
 	saveAchivementsProgress()
 	saveSettings()
 end

@@ -1,9 +1,6 @@
 # macOS
 *.DS_Store
 
-# Visual Studio Code
-.vscode/*
-
 # Build
 build/*
 
@@ -42,3 +39,5 @@ art/*.xml
 # STOP UPLOADING SHORTCUTS CH
 *.lnk
 
+# Hides our GJ keys lol!!!!!!!
+*.key

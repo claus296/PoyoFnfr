@@ -2,13 +2,14 @@ local character = {}
 
 function character.poyo(x, y)
     curEnemy = "poyo"
-    local char = paths.sprite(x or 0, y or 0, "city/poyospr")
-    char:addByPrefix("idle", "poyo idle", 12, false)
+    local char = sprite(x or 0, y or 0)
+    char:setFrames(paths.getSparrowFrames("city/poyospr"))
+    char:addAnimByPrefix("idle", "poyo idle", 12, false)
 
-    char:addByPrefix("left", "poyo left", 12, false)
-    char:addByPrefix("right", "poyo right", 12, false)
-    char:addByPrefix("up", "poyo up", 12, false)
-    char:addByPrefix("down", "poyo down", 12, false)
+    char:addAnimByPrefix("left", "poyo left", 12, false)
+    char:addAnimByPrefix("right", "poyo right", 12, false)
+    char:addAnimByPrefix("up", "poyo up", 12, false)
+    char:addAnimByPrefix("down", "poyo down", 12, false)
 
     char:addOffset("idle",  0, 0   )
 
@@ -26,13 +27,14 @@ end
 
 function character.poyoOld(x, y)
     curEnemy = "poyoOld"
-    local char = paths.sprite(x or 0, y or 0, "city-old/poyolmao")
-    char:addByPrefix("idle", "Idle", 16, false)
+    local char = sprite(x or 0, y or 0)
+    char:setFrames(paths.getSparrowFrames("city-old/poyolmao"))
+    char:addAnimByPrefix("idle", "Idle", 16, false)
 
-    char:addByPrefix("left", "Right", 8, false)
-    char:addByPrefix("right", "Left", 8, false)
-    char:addByPrefix("up", "Up", 8, false)
-    char:addByPrefix("down", "Down", 8, false)
+    char:addAnimByPrefix("left", "Right", 8, false)
+    char:addAnimByPrefix("right", "Left", 8, false)
+    char:addAnimByPrefix("up", "Up", 8, false)
+    char:addAnimByPrefix("down", "Down", 8, false)
 
     char:addOffset("idle",  0, 0      )
 
@@ -52,13 +54,14 @@ end
 
 function character.boyfriend(x, y)
     curPlayer = "newBF"
-    local char = paths.sprite(x or 0, y or 0, "city/newbfpoyo")
-    char:addByPrefix("idle", "BF idle dance", 12, false)
+    local char = sprite(x or 0, y or 0)
+    char:setFrames(paths.getSparrowFrames("city/newbfpoyo"))
+    char:addAnimByPrefix("idle", "BF idle dance", 12, false)
 
-    char:addByPrefix("left", "BF NOTE LEFT", 12, false)
-    char:addByPrefix("right", "BF NOTE RIGHT", 12, false)
-    char:addByPrefix("up", "BF NOTE UP", 12, false)
-    char:addByPrefix("down", "BF NOTE DOWN", 12, false)
+    char:addAnimByPrefix("left", "BF NOTE LEFT", 12, false)
+    char:addAnimByPrefix("right", "BF NOTE RIGHT", 12, false)
+    char:addAnimByPrefix("up", "BF NOTE UP", 12, false)
+    char:addAnimByPrefix("down", "BF NOTE DOWN", 12, false)
 
     char:addOffset("idle",   0, 0     )
 
@@ -78,16 +81,17 @@ function character.girlfriend(x, y, isEnemy)
     if isEnemy then
         curEnemy = "girlfriend"
     end
-    local char = paths.sprite(x or 0, y or 0, "GF_assets")
-    char:addByPrefix("idle", "GF Dancing Beat", 24, false)
-    char:addByPrefix("sad", "gf sad", 24, false)
-    char:addByPrefix("fear", "GF FEAR ", 24, false)
-    char:addByPrefix("cheer", "GF Cheer", 24, false)
+    local char = sprite(x or 0, y or 0)
+    char:setFrames(paths.getSparrowFrames("GF_assets"))
+    char:addAnimByPrefix("idle", "GF Dancing Beat", 24, false)
+    char:addAnimByPrefix("sad", "gf sad", 24, false)
+    char:addAnimByPrefix("fear", "GF FEAR ", 24, false)
+    char:addAnimByPrefix("cheer", "GF Cheer", 24, false)
 
-    char:addByPrefix("left", "GF left note", 24, false)
-    char:addByPrefix("right", "GF Right Note", 24, false)
-    char:addByPrefix("up", "GF Up Note", 24, false)
-    char:addByPrefix("down", "GF Down Note", 24, false)
+    char:addAnimByPrefix("left", "GF left note", 24, false)
+    char:addAnimByPrefix("right", "GF Right Note", 24, false)
+    char:addAnimByPrefix("up", "GF Up Note", 24, false)
+    char:addAnimByPrefix("down", "GF Down Note", 24, false)
 
     char:addOffset("idle",  0, 0    )
     char:addOffset("sad",  -2, -21  )
@@ -107,8 +111,9 @@ function character.girlfriend(x, y, isEnemy)
 end
 
 function character.luigi(x, y)
-    local char = paths.sprite(x or 0, y or 0, "luigi")
-    char:addByPrefix("idle", "luigi idle", 24, false)
+    local char = sprite(x or 0, y or 0)
+    char:setFrames(paths.getSparrowFrames("luigi"))
+    char:addAnimByPrefix("idle", "luigi idle", 24, false)
 
     char:addOffset("idle")
 

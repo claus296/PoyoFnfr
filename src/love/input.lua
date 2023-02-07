@@ -36,6 +36,19 @@ if love.system.getOS() == "NX" then
 			gameDown = {"axis:lefty+", "axis:righty+", "button:leftshoulder", "button:dpdown", "button:a", "key:" .. customBindDown, "key:down"},
 			gameUp = {"axis:lefty-", "axis:righty-", "button:rightshoulder", "button:dpup", "button:y", "key:" .. customBindUp, "key:up"},
 			gameRight = {"axis:triggerright+", "axis:leftx+", "axis:rightx+", "button:dpright", "button:b", "key:" .. customBindRight, "key:right"},
+
+			-- Multiplayer Keybinds -- Keybinds currently are not supported for multiplayer
+
+			gameLeftP1 = {"axis:rightx-", "button:x", "key:left"},
+			gameDownP1 = {"axis:righty+", "button:a", "key:down"},
+			gameUpP1 = {"axis:righty-", "button:y", "key:up"},
+			gameRightP1 = {"axis:rightx+", "button:b", "key:right"},
+
+			gameLeftP2 = {"axis:leftx-", "button:dpleft", "key:a"},
+			gameDownP2 = {"axis:lefty+", "button:dpdown", "key:s"},
+			gameUpP2 = {"axis:lefty-", "button:dpup", "key:w"},
+			gameRightP2 = {"axis:leftx+", "button:dpright", "key:d"},
+
 			gameBack = {"button:start", "key:escape"},
 		},
 		joystick = love.joystick.getJoysticks()[1]
@@ -59,6 +72,19 @@ else
 			gameDown = {"key:" .. customBindDown, "key:down", "axis:lefty+", "axis:righty+", "button:leftshoulder", "button:dpdown", "button:a"},
 			gameUp = {"key:" .. customBindUp, "key:up", "axis:lefty-", "axis:righty-", "button:rightshoulder", "button:dpup", "button:y"},
 			gameRight = {"key:" .. customBindRight, "key:right", "axis:triggerright+", "axis:leftx+", "axis:rightx+", "button:dpright", "button:b"},
+
+			-- Multiplayer Keybinds -- Keybinds currently are not supported for multiplayer
+
+			gameLeftP1 = {"axis:rightx-", "button:x", "key:left"},
+			gameDownP1 = {"axis:righty+", "button:a", "key:down"},
+			gameUpP1 = {"axis:righty-", "button:y", "key:up"},
+			gameRightP1 = {"axis:rightx+", "button:b", "key:right"},
+
+			gameLeftP2 = {"axis:leftx-", "button:dpleft", "key:a"},
+			gameDownP2 = {"axis:lefty+", "button:dpdown", "key:s"},
+			gameUpP2 = {"axis:lefty-", "button:dpup", "key:w"},
+			gameRightP2 = {"axis:leftx+", "button:dpright", "key:d"},
+
 			gameBack = {"key:escape", "button:start"},
 		},
 		joystick = love.joystick.getJoysticks()[1]

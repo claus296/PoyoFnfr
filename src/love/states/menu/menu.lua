@@ -10,7 +10,6 @@ local songDifficulty = 2
 local selectSound = love.audio.newSource("sounds/menu/select.ogg", "static")
 local confirmSound = love.audio.newSource("sounds/menu/confirm.ogg", "static")
 local transparency
-local danceRight
 
 local function switchMenu(menu)
 	function backFunc()
@@ -25,11 +24,10 @@ return {
 		if not music[1]:isPlaying() then
 			music[1]:play()
 		end
-		
 		music[1]:onBeat(function()
 			self:onBeat(music[1]:getBeat())
 		end)
-		danceRight = false
+
 		transparency = {0}
 		Timer.tween(
 			1,
@@ -46,20 +44,6 @@ return {
 		enter:animate("anim", true)
 
 		changingMenu = false
-		logo = paths.sprite(-800, -450, "logoBumpin")
-   		logo:addByPrefix("bump", "logo bumpin", 24, false)
-		
-		girlfriendTitle = paths.sprite(-25, -275, "menu/girlfriend-title")
-		girlfriendTitle:addByIndices("danceLeft", "gfDance",
-				   {30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}, 24,
-				   false)
-   
-		girlfriendTitle:addByIndices("danceRight", "gfDance", {
-				   15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29}, 24, 
-				   false)
-
-		logo:animate("bumpin", false)
-		girlfriendTitle:animate("danceRight", false)
 
 		if love.system.getOS() == "OS X" and gamejoltLogin["useGamejolt"] then
 			gamejolt.giveTrophy(175141)
@@ -78,38 +62,24 @@ return {
 
 		graphics.setFade(0)
 		graphics.fadeIn(0.5)
-
-		updatePres("Press Enter", "In the Menu")
 	end,
 	onBeat = function(self, n)
-		danceRight = not danceRight
-		if girlfriendTitle then 
-			if n % 2 == 0 then
-				girlfriendTitle:animate("danceRight", false)
-			else
-				girlfriendTitle:animate("danceLeft", false)
-			end 
-		end
-
-		--if logo then logo:animate("anim", false) end
-		if logo then logo:animate("bump", false) end
+		
 	end,
 
 	update = function(self, dt)
-		girlfriendTitle:update(dt)
-		logo:update(dt)
+
+		music[1]:updateBeat()
 		enter:update(dt)
 
 		if input:pressed("beast") then
 			BEASTMODE = true
 		end
 
-		music[1]:updateBeat()
-
 		if not graphics.isFading() then
 			if input:pressed("confirm") then
 				enter:animate("pressed", true)
-
+				
 				if not changingMenu then
 					audio.playSound(confirmSound)
 					changingMenu = true
@@ -148,12 +118,12 @@ return {
 				love.graphics.push()
 					love.graphics.scale(0.9, 0.9)
 					love.graphics.translate(menuDetails.titleLogo.x, menuDetails.titleLogo.y)
-		
+					
 				love.graphics.pop()
 				love.graphics.push()
 					love.graphics.scale(0.9, 0.9)
 					--love.graphics.translate(menuDetails.girlfriendTitle.x, menuDetails.girlfriendTitle.y)
-			
+				
 				love.graphics.pop()
 				love.graphics.push()
 					graphics.setColor(0, 0, 0, 0.9)
@@ -168,8 +138,6 @@ return {
 	end,
 
 	leave = function(self)
-		--girlfriendTitle = nil
-		logo = nil
 
 		Timer.clear()
 	end

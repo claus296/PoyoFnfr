@@ -15,11 +15,11 @@ return {
         girlfriend.x, girlfriend.y = 100, -220
         speaker.x, speaker.y = 100, -260
         enemy.x, enemy.y = -775, -500
-        boyfriend.x, boyfriend.y = -200, -480
+        boyfriend.x, boyfriend.y = -200, -440
         fakeBoyfriend.x, fakeBoyfriend.y = 260, -125
 
         girlfriend.sizeX, girlfriend.sizeY = 0.6
-        boyfriend.sizeX, boyfriend.sizeY = 1.2
+        boyfriend.scale.x, boyfriend.scale.y = 1.2
 
         speaker:animate("anim", true)
 

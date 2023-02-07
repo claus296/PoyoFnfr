@@ -132,8 +132,6 @@ return {
 		graphics.setFade(0)
 		graphics.fadeIn(0.5)
 
-        updatePres("Choosing a mode", "In the Main Menu")
-
 	end,
 
 	update = function(self, dt)

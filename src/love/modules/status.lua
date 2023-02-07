@@ -41,7 +41,9 @@ return {
 		love.graphics.setFont(font)
 
 		if type == "detailed" then
-			debugStr = "FPS: " .. tostring(love.timer.getFPS()) ..
+			debugStr = "Vanilla Engine v" .. __VERSION__ ..
+			"\nCurrent Version (Git) " .. __GIT_VERSION__ ..
+			"\nFPS: " .. tostring(love.timer.getFPS()) ..
 			"\nLUA MEM USAGE (KB): " .. tostring(math.floor(collectgarbage("count"))) ..
 			"\nGRAPHICS MEM USAGE (MB): " .. tostring(math.floor(love.graphics.getStats().texturememory / 1048576)) ..
 

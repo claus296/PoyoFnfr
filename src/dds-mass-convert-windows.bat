@@ -29,13 +29,20 @@ if exist ..\dds rmdir ..\dds /q /s
 
 echo Converting...
 for /d %%d in (*) do (
-	mkdir ..\dds\%%d
-	
-	for %%f in (%%d\*) do (
-		%texconv% -f DXT5 -m 1 -nologo -o ..\dds\%%d -srgb -y %%f
-		
-		rename ..\dds\%%d\%%~nf.DDS %%~nf.dds
+	rem if pixel or week6 is not in the name, then convert, else skip
+	if not "%%~nd" == "week6" (
+		if not "%%~nd" == "pixel"  (
+
+			mkdir ..\dds\%%d
+			
+			for %%f in (%%d\*) do (
+				%texconv% -f DXT5 -m 1 -nologo -o ..\dds\%%d -srgb -y %%f
+				
+				rename ..\dds\%%d\%%~nf.DDS %%~nf.dds
+			)
+		)
 	)
+
 )
 for %%f in (*) do (
 	%texconv% -f DXT5 -m 1 -nologo -o ..\dds -srgb -y %%f

@@ -153,7 +153,7 @@ return {
         love.graphics.translate(graphics.getWidth() / 2, graphics.getHeight() / 2)
         bg:cdraw(0, 0, 0.4*255, 1)
         love.graphics.translate(-350,math.abs(graphics.getHeight() / 2)+credY[1]-700)
-        love.graphics.color.printf(creditText, 0, 0, 750, "center")
+        love.graphics.printf(creditText, 0, 0, 750, "center")
         love.graphics.pop()
         love.graphics.setFont(font)
     end,

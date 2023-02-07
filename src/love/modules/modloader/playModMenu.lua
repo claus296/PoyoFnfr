@@ -228,7 +228,6 @@ return {
 
 		graphics.setFade(0)
 		graphics.fadeIn(0.5)
-		updatePres("Choosing a song", "In the Freeplay Menu")
 
 	end,
 

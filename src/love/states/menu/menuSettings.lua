@@ -21,6 +21,7 @@ newlinesMoment = {
     "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
     "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
     "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+
 }
 
 settingsDescriptions1 = { -- The big spaces are so it lines up lol
@@ -90,7 +91,7 @@ settingsDescriptions3 = {
     "\n       \"Practice Mode\" Too hard? Enable this to not lose!",
 
     "Sudden Death:" ..
-    "\n       \"Sudden Death\" Too easy? Enable this to lose if you miss one note"
+    "\n       \"Sudden Death\" Too easy? Enable this to lose if you miss one note",
 }
 
 local function switchMenu(menu)end
@@ -110,7 +111,6 @@ return {
 		graphics.setFade(0)
 		graphics.fadeIn(0.5)
 
-        updatePres("Changing Settings", "In the Settings Menu")
 	end,
 
 	update = function(self, dt)
@@ -389,10 +389,10 @@ return {
                     love.graphics.print("\n\n\n\n\n\n\n\nHitsounds Volume = " .. tostring(settings.hitsoundVol), -628, -300)
                 end
                 if settingsMenuState == 2 then
-                   love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -360)
-                else
-                    love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -300)
-                end
+                    love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -360)
+                 else
+                     love.graphics.print(newlinesMoment[settingSelect] .. ">", -640, -300)
+                 end
                 
 
                 if settingsMenuState ~= 0 then

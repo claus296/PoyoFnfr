@@ -314,12 +314,18 @@ return {
 					end
 				end
 			end,
-			draw = function(self)
+			draw = function(self, x, y)
 				local flooredFrame = math.floor(frame)
 
 				if flooredFrame <= anim.stop then
-					local x = self.x
-					local y = self.y
+					local x = x or self.x
+					local y = y or self.y 
+					if x == 0 then 
+						x = self.x 
+					end
+					if y == 0 then 
+						y = self.y 
+					end
 					local width
 					local height
 
@@ -364,13 +370,19 @@ return {
 				end
 			end,
 
-			udraw = function(self,sizeX, sizeY)
+			udraw = function(self, sizeX, sizeY, x, y)
 				local flooredFrame = math.floor(frame)
 				local sizeX, sizeY = sizeX or 7, sizeY or 7
 
 				if flooredFrame <= anim.stop then
-					local x = self.x
-					local y = self.y
+					local x = x or self.x 
+					local y = y or self.y 
+					if x == 0 then 
+						x = self.x 
+					end
+					if y == 0 then 
+						y = self.y 
+					end
 					local width
 					local height
 

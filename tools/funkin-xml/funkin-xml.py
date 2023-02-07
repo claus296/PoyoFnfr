@@ -14,7 +14,6 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # --------------------------------------------------------------------------------
@@ -56,7 +55,9 @@ for SubTexture in sheetxml.findall('SubTexture'):
 lua = lua[:len(lua) - (len(str(c)) + len(name) + 9)] + '} -- ' + str(c) + ': ' + name + '\n'
 lua += '\t},\n'
 lua += ('\t{\n'
-    '\t\t["anim"] = {start = 1, stop = 1, speed = 0, offsetX = 0, offsetY = 0},\n')
+    '\t\t--To get the animations, look at the number and the name of the frame\n'
+    '\t\t--Start is the first frame, stop is the last frame, speed is the speed of the animation, offsetX and offsetY are the offset of the animation\n\t\t--Get the offset by using the ingame offset editor and pressing 7\n'
+    '\t\t["anim"] = {start = 1, stop = 1, speed = 24, offsetX = 0, offsetY = 0},\n') # Default speed is 24
 lua += (
     "\t},\n"
     "\t\"anim\", -- set to default animation\n"

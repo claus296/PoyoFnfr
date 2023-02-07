@@ -2,6 +2,8 @@
 -- Some code was used from sprite debug ig
 local menuID, selection
 local curDir, dirTable
+local stageImgNames = {}
+local curChanging = "stage"
 return {
     stageViewerSearch = function(self, dir)
         svMode = 1
@@ -49,45 +51,69 @@ return {
 		if menus[menuID][1] == 2 then -- Stage viewer
 			if svMode == 2 then
                 -- Stage Positions
-                if key == "a" then
-                    stageImages[selection].x = stageImages[selection].x - 1
-                elseif key == "d" then
-                    stageImages[selection].x = stageImages[selection].x + 1
-                elseif key == "w" then
-                    stageImages[selection].y = stageImages[selection].y - 1
-                elseif key == "s" then
-                    stageImages[selection].y = stageImages[selection].y + 1
-                end
-                -- BF Positions
-                if key == "kp2" then
-                    boyfriend.y = boyfriend.y + 1
-                elseif key == "kp8" then
-                    boyfriend.y = boyfriend.y - 1
-                elseif key == "kp4" then
-                    boyfriend.x = boyfriend.x - 1
-                elseif key == "kp6" then
-                    boyfriend.x = boyfriend.x + 1
-                end
-                -- GF Positions
-                if key == "g" then
-                    girlfriend.y = girlfriend.y + 1
-                elseif key == "t" then
-                    girlfriend.y = girlfriend.y - 1
-                elseif key == "f" then
-                    girlfriend.x = girlfriend.x - 1
-                elseif key == "h" then
-                    girlfriend.x = girlfriend.x + 1
-                end
-                -- Enemy Positions
-                if key == "k" then
-                    enemy.y = enemy.y + 1
-                elseif key == "i" then
-                    enemy.y = enemy.y - 1
-                elseif key == "j" then
-                    enemy.x = enemy.x - 1
-                elseif key == "l" then
-                    enemy.x = enemy.x + 1
-                end
+				if curChanging == "stage" then
+					if key == "a" then
+						stageImages[stageImgNames[selection]].x = stageImages[stageImgNames[selection]].x - 1
+					elseif key == "d" then
+						stageImages[stageImgNames[selection]].x = stageImages[stageImgNames[selection]].x + 1
+					elseif key == "w" then
+						stageImages[stageImgNames[selection]].y = stageImages[stageImgNames[selection]].y - 1
+					elseif key == "s" then
+						stageImages[stageImgNames[selection]].y = stageImages[stageImgNames[selection]].y + 1
+					elseif key == "q" then 
+						stageImages[stageImgNames[selection]].sizeX = stageImages[stageImgNames[selection]].sizeX - 0.1
+					elseif key == "e" then
+						stageImages[stageImgNames[selection]].sizeX = stageImages[stageImgNames[selection]].sizeX + 0.1
+					end
+				elseif curChanging == "boyfriend" then 
+					if key == "a" then
+						boyfriend.x = boyfriend.x - 1
+					elseif key == "d" then
+						boyfriend.x = boyfriend.x + 1
+					elseif key == "w" then
+						boyfriend.y = boyfriend.y - 1
+					elseif key == "s" then
+						boyfriend.y = boyfriend.y + 1
+					elseif key == "q" then 
+						boyfriend.sizeX = boyfriend.sizeX - 0.1
+						boyfriend.sizeY = boyfriend.sizeY - 0.1
+					elseif key == "e" then
+						boyfriend.sizeX = boyfriend.sizeX + 0.1
+						boyfriend.sizeY = boyfriend.sizeY + 0.1
+					end
+				elseif curChanging == "girlfriend" then 
+					if key == "a" then
+						girlfriend.x = girlfriend.x - 1
+					elseif key == "d" then
+						girlfriend.x = girlfriend.x + 1
+					elseif key == "w" then
+						girlfriend.y = girlfriend.y - 1
+					elseif key == "s" then
+						girlfriend.y = girlfriend.y + 1
+					elseif key == "q" then
+						girlfriend.sizeX = girlfriend.sizeX - 0.1
+						girlfriend.sizeY = girlfriend.sizeY - 0.1
+					elseif key == "e" then
+						girlfriend.sizeX = girlfriend.sizeX + 0.1
+						girlfriend.sizeY = girlfriend.sizeY + 0.1
+					end
+				elseif curChanging == "enemy" then 
+					if key == "a" then
+						enemy.x = enemy.x - 1
+					elseif key == "d" then
+						enemy.x = enemy.x + 1
+					elseif key == "w" then
+						enemy.y = enemy.y - 1
+					elseif key == "s" then
+						enemy.y = enemy.y + 1
+					elseif key == "q" then
+						enemy.sizeX = enemy.sizeX - 0.1
+						enemy.sizeY = enemy.sizeY - 0.1
+					elseif key == "e" then
+						enemy.sizeX = enemy.sizeX + 0.1
+						enemy.sizeY = enemy.sizeY + 0.1
+					end
+				end
 			end
 		end
 	end,
@@ -104,14 +130,35 @@ return {
 					selection = selection - 1
 
 					if selection < 1 then
-						selection = #stageImages
+						selection = #stageImgNames
 					end
 				end
 				if input:pressed("down") then
 					selection = selection + 1
 
-					if selection > #stageImages then
+					if selection > #stageImgNames then
 						selection = 1
+					end
+				end
+				if input:pressed("right") then 
+					if curChanging == "stage" then 
+						curChanging = "boyfriend"
+					elseif curChanging == "boyfriend" then
+						curChanging = "girlfriend"
+					elseif curChanging == "girlfriend" then
+						curChanging = "enemy"
+					elseif curChanging == "enemy" then
+						curChanging = "stage"
+					end
+				elseif input:pressed("left") then 
+					if curChanging == "stage" then 
+						curChanging = "enemy"
+					elseif curChanging == "boyfriend" then
+						curChanging = "stage"
+					elseif curChanging == "girlfriend" then
+						curChanging = "boyfriend"
+					elseif curChanging == "enemy" then
+						curChanging = "girlfriend"
 					end
 				end
 			else
@@ -139,9 +186,13 @@ return {
 					else
                         fileStr = dirTable[selection]
                         fileStr = fileStr:sub(1, -5)
-                        boyfriend = love.filesystem.load("sprites/boyfriend.lua")()
-                        girlfriend = love.filesystem.load("sprites/girlfriend.lua")()
+                        boyfriend = Character.boyfriend(0, 0)
+                        girlfriend = Character.girlfriend(0, 0)
                         stages[fileStr]:enter()
+						for i, v in pairs(stageImages) do
+							-- insert into the stageImgNames table
+							table.insert(stageImgNames, i)
+						end
                         selection = 1
 						self:spriteViewer(curDir .. "/" .. dirTable[selection])
 						boyfriend:animate("idle", true)
@@ -192,29 +243,35 @@ return {
                     stages[fileStr]:draw()
 				love.graphics.pop()
 
-				for i = 1, #stageImages do
-					if i == selection then
-						graphics.setColor(1, 1, 0)
-					end
-					love.graphics.print(stageImages[i], 0, (i - 1) * 20)
-					graphics.setColor(1, 1, 1)
+				if curChanging == "stage" then
+					love.graphics.print(stageImgNames[selection], 0, 0)
+					love.graphics.print("X: " .. stageImages[stageImgNames[selection]].x ..
+						"\nY:" .. stageImages[stageImgNames[selection]].y ..
+						"\nSizeX:" .. stageImages[stageImgNames[selection]].sizeX ..
+						"\nSizeY:" .. stageImages[stageImgNames[selection]].sizeY, 0, 40
+					)
+				elseif curChanging == "boyfriend" then
+					love.graphics.print("Boyfriend", 0, 0)
+					love.graphics.print("X: " .. boyfriend.x ..
+						"\nY:" .. boyfriend.y ..
+						"\nSizeX:" .. boyfriend.sizeX ..
+						"\nSizeY:" .. boyfriend.sizeY, 0, 40
+					)
+				elseif curChanging == "girlfriend" then
+					love.graphics.print("Girlfriend", 0, 0)
+					love.graphics.print("X: " .. girlfriend.x ..
+						"\nY:" .. girlfriend.y ..
+						"\nSizeX:" .. girlfriend.sizeX ..
+						"\nSizeY:" .. girlfriend.sizeY, 0, 40
+					)
+				elseif curChanging == "enemy" then
+					love.graphics.print("Enemy", 0, 0)
+					love.graphics.print("X: " .. enemy.x ..
+						"\nY:" .. enemy.y ..
+						"\nSizeX:" .. enemy.sizeX ..
+						"\nSizeY:" .. enemy.sizeY, 0, 40
+					)
 				end
-                love.graphics.print("X: " .. tostring(stageImages[selection].x) ..
-                                    "\nY: " .. tostring(stageImages[selection].y) ..
-                                    "\nBF X: " .. tostring(boyfriend.x) ..
-                                    "\nBF Y: " .. tostring(boyfriend.y) ..
-                                    "\nGF X: " .. tostring(girlfriend.x) ..
-                                    "\nGF Y: " .. tostring(girlfriend.y) ..
-                                    "\nEnemy X: " .. tostring(enemy.x) ..
-                                    "\nEnemy Y: " .. tostring(enemy.y)
-                                    )
-                love.graphics.printf(
-                    "Selection: " .. tostring(selection),
-                    love.graphics.getWidth() - -70,
-                    0,
-                    50,
-                    "right"
-                )
                 for i = 1, #menus[menuID] do
                     if i == selection then
                         graphics.setColor(1, 1, 0)
@@ -247,6 +304,5 @@ return {
 				love.graphics.print("Press Esc to exit at any time", 0, (#menus[menuID] + 1) * 20)
 			end
 		end
-        love.graphics.print(tostring(fileStr), 400, 0)
     end
 }

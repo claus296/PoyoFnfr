@@ -9,73 +9,7 @@ highscores = {
         ["hard"] = {
             scores = {0, 0, 0}, accuracys = {0, 0, 0}
         }
-    }, -- Week 1
-    [1] = {
-        ["easy"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["normal"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["hard"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        }
-    }, -- Week 2
-    [2] = {
-        ["easy"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["normal"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["hard"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        }
-    }, -- Week 3
-    [3] = {
-        ["easy"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["normal"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["hard"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        }
-    }, -- Week 4
-    [4] = {
-        ["easy"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["normal"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["hard"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        }
-    }, -- Week 5
-    [5] = {
-        ["easy"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["normal"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["hard"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        }
-    }, -- Week 6
-    [6] = {
-        ["easy"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["normal"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        },
-        ["hard"] = {
-            scores = {0, 0, 0}, accuracys = {0, 0, 0}
-        }
-    }, -- Week 7
+    },
     version = 3
 }
 achievementProgress = {
@@ -214,11 +148,6 @@ if love.filesystem.getInfo("gamejoltLogin") then
         
         gamejolt.authUser(gamejoltLogin["username"], gamejoltLogin["token"])
     end
-    if gamejoltLogin["useGamejolt"] then
-        print("Signed in as " .. gamejoltLogin["username"])
-    else
-        print("Not using GameJolt")
-    end
 else
     local file = love.filesystem.newFile("gamejoltLogin")
     file:open("w")
@@ -235,17 +164,6 @@ if love.filesystem.getInfo("highscores") then
         highscores = {
             [0] = {
                 ["easy"] = {
-                    scores = {0}, accuracys = {0}
-                },
-                ["normal"] = {
-                    scores = {0}, accuracys = {0}
-                },
-                ["hard"] = {
-                    scores = {0}, accuracys = {0}
-                }
-            },             -- Tutorial
-            [1] = {
-                ["easy"] = {
                     scores = {0, 0, 0}, accuracys = {0, 0, 0}
                 },
                 ["normal"] = {
@@ -254,73 +172,7 @@ if love.filesystem.getInfo("highscores") then
                 ["hard"] = {
                     scores = {0, 0, 0}, accuracys = {0, 0, 0}
                 }
-            }, -- Week 1
-            [2] = {
-                ["easy"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["normal"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["hard"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                }
-            }, -- Week 2
-            [3] = {
-                ["easy"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["normal"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["hard"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                }
-            }, -- Week 3
-            [4] = {
-                ["easy"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["normal"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["hard"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                }
-            }, -- Week 4
-            [5] = {
-                ["easy"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["normal"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["hard"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                }
-            }, -- Week 5
-            [6] = {
-                ["easy"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["normal"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["hard"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                }
-            }, -- Week 6
-            [7] = {
-                ["easy"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["normal"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                },
-                ["hard"] = {
-                    scores = {0, 0, 0}, accuracys = {0, 0, 0}
-                }
-            }, -- Week 7
+            },
             version = 3
         }
         saveHighscores()
@@ -442,7 +294,7 @@ if not love.filesystem.getInfo("settings") or settingsVer ~= 7 then
     settings.vocalsVol = 1
     settings.hitsoundVol = 1
     settings.noteSkins = 1
-    settings.disableEnemyScore = true
+    settings.disableEnemyScore = false
     customBindLeft = "a"
     customBindRight = "d"
     customBindUp = "w"

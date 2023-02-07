@@ -18,19 +18,6 @@ return {
             elseif key == "return" then
                 usernameInput = false
                 passwordInput = true
-            else
-                -- cancel out all special characters
-                if key ~= "lctrl" and key ~= "rctrl" and key ~= "lalt" and key ~= "ralt" and key ~= "lmeta" and key ~= "rctrl" and key ~= "lctrl" and key ~= "ralt" and key ~= "lalt" and key ~= "rmeta" and key ~= "lmeta" and key ~= "lsuper" and key ~= "rsuper" and key ~= "mode" and key ~= "compose" and key ~= "pause" and key ~= "printscreen" and key ~= "escape" and key ~= "help" then
-                    if not love.keyboard.isDown("lshift") then
-                        if key ~= "lshift" then
-                            username = username .. key
-                        end
-                    else
-                        if key ~= "lshift" then
-                            username = username .. string.upper(key)
-                        end
-                    end
-                end
             end
         elseif passwordInput then
             if key == "backspace" then
@@ -42,9 +29,15 @@ return {
                     Gamestate.switch(menu)
                     status.setLoading(false)
                 end)
-            else
-                token = token .. key
             end
+        end
+    end,
+
+    textinput = function(self, text)
+        if usernameInput then
+            username = username .. text
+        elseif passwordInput then
+            token = token .. text
         end
     end,
 

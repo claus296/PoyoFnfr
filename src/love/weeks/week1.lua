@@ -25,21 +25,37 @@ return {
 	enter = function(self, from, songNum, songAppend)
 		pauseColor = {129, 100, 223}
 		weeks:enter()
-		stages["city"]:enter()
 		BgAlpha = 1
-		CharAlpha = 1
 		fakeCountdownFade = 0
-		newGf = true
 
 		cam.sizeX, cam.sizeY = 0.8, 0.8
 		camScale.x, camScale.y = 0.8, 0.8
+
 
 		week = 1
 
 		fakeCountdown = love.filesystem.load("sprites/countdown.lua")()
 
+        enemy = Character.poyo(0,0)
+		
+		girlfriend = love.filesystem.load("sprites/city/newGf.lua")()
+
+        fakeBoyfriend = love.filesystem.load("sprites/boyfriend.lua")()
+
+        speaker = love.filesystem.load("sprites/city/speaker.lua")()
+
+        girlfriend.x, girlfriend.y = 100, -220
+        speaker.x, speaker.y = 100, -260
+        enemy.x, enemy.y = -775, -500
+        boyfriend.x, boyfriend.y = -200, -420
+        fakeBoyfriend.x, fakeBoyfriend.y = 260, -125
 		fakeCountdown.sizeX, fakeCountdown.sizeY = 0.9
 		fakeCountdown.x, fakeCountdown.y = 700, 350
+		
+        girlfriend.sizeX, girlfriend.sizeY = 0.6
+        boyfriend.scale.x, boyfriend.scale.y = 1.2
+
+		city = graphics.newImage(love.graphics.newImage(graphics.imagePath("city/cityBG")))
 
 		song = songNum
 		difficulty = songAppend
@@ -47,12 +63,15 @@ return {
 		weeks:setIcon("enemy", "daddy dearest")
 		weeks:setIcon("boyfriend", "skid and pump")
 
+        speaker:animate("anim", true)
+
 		self:load()
 	end,
 
 	load = function(self)
 		weeks:load()
-		stages["city"]:load()
+		
+        cam.x, cam.y = -150, 156
 
 		if song == 3 then
 			if BEASTMODE then
@@ -91,7 +110,10 @@ return {
 
 	update = function(self, dt)
 		weeks:update(dt)
-		stages["city"]:update(dt)
+		speaker:update(dt)
+
+		speaker:setAnimSpeed(14.4 / (60 / bpm) * girlfriendSpeedMultiplier)
+
 		if song == 1 then
 			if musicTime >= 91448.275862069 then
 				if musicTime <= 91562.0689655172 then
@@ -143,11 +165,9 @@ return {
 			end
 			if musicTime >= 65000 then
 				BgAlpha = 0
-				CharAlpha = 0
 			end
 			if musicTime >= 66000 then
 				BgAlpha = 1
-				CharAlpha = 1
 			end
 			if musicTime >= 82000 then
 				BgAlpha = 0.5
@@ -162,7 +182,6 @@ return {
 				BgAlpha = 1
 			end
 		end
-
 
 		if health >= 80 then
 			if enemyIcon:getAnimName() == "daddy dearest" then
@@ -218,16 +237,48 @@ return {
 	draw = function(self)
 		love.graphics.push()
 			love.graphics.translate(graphics.getWidth() / 2, graphics.getHeight() / 2)
-			love.graphics.scale(extraCamZoom.sizeX, extraCamZoom.sizeY)
 			love.graphics.scale(cam.sizeX, cam.sizeY)
 
-			if song == 3 then
-				if musicTime <= 216000 then
-					stages["city"]:draw()
+			love.graphics.push()
+				love.graphics.translate(cam.x * 0.9, cam.y * 0.9)
+
+				if song == 3 then
+					love.graphics.setColor(1,1,1,BgAlpha)
+
+					city:draw()
+
+					love.graphics.setColor(1,1,1,1)
+				else
+					city:draw()
 				end
-			else
-				stages["city"]:draw()
-			end
+
+			love.graphics.pop()
+			love.graphics.push()
+				love.graphics.translate(cam.x, cam.y)
+
+				if song == 3 then
+					if musicTime <= 65000 then
+						speaker:draw()
+						girlfriend:draw()
+						enemy:draw()
+					elseif musicTime >= 66000 then
+						speaker:draw()
+						girlfriend:draw()
+						enemy:draw()
+					end
+				else
+					speaker:draw()
+					girlfriend:draw()
+					enemy:draw()
+				end
+
+				boyfriend:draw()
+
+			love.graphics.pop()
+			love.graphics.push()
+				love.graphics.translate(cam.x * 1.1, cam.y * 1.1)
+
+			love.graphics.pop()
 			weeks:drawRating(0.9)
 		love.graphics.pop()
 		
@@ -235,9 +286,7 @@ return {
 		if not paused then
 			weeks:drawHealthBar()
 		end
-		if not paused then
-			weeks:drawUI()
-		end
+		weeks:drawUI()
 		if song == 1 then
 			love.graphics.setColor(1,1,1,fakeCountdownFade)
 			fakeCountdown:draw()
@@ -249,11 +298,9 @@ return {
 	end,
 
 	leave = function(self)
-		stages["city"]:leave()
 		BgAlpha = 1
 		fakeCountdownFade = 0
 		fakeCountdown = nil
-		newGf = false
 		BEASTMODE = false
 
 		weeks:leave()

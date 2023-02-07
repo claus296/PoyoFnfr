@@ -64,8 +64,6 @@ return {
 		cam.sizeX, cam.sizeY = 0.9, 0.9
 		camScale.x, camScale.y = 0.9, 0.9
 
-		updatePres("Choosing A Week", "In the Week Select Menu", "logo", now)
-
 		freeColour = {
 			255,255,255
 		}
@@ -95,22 +93,9 @@ return {
 
 		arrowRight.orientation = 1.5707963267949*2
 
-		bfDanceLines = love.filesystem.load("sprites/menu/idlelines.lua")()
-
-		gfDanceLines = love.filesystem.load("sprites/menu/idlelines.lua")()
-
-		bfDanceLines.sizeX, bfDanceLines.sizeY = 0.5, 0.5
-		gfDanceLines.sizeX, gfDanceLines.sizeY = 0.5, 0.5
-
-		bfDanceLines.x, bfDanceLines.y = 400, 0
-		gfDanceLines.x, gfDanceLines.y = 0, -20
-
 		weekImages = graphics.newImage(love.graphics.newImage(graphics.imagePath("menu/week1")))
 
 		weekImages.y = -270
-
-		bfDanceLines:animate("boyfriend", true)
-		gfDanceLines:animate("girlfriend", true)
 
 		switchMenu(1)
 
@@ -152,8 +137,6 @@ return {
 			end
 		end
 
-		bfDanceLines:update(dt)
-		gfDanceLines:update(dt)
 		arrowLeft:update(dt)
 		arrowRight:update(dt)
 		--print(weekNum)
@@ -184,7 +167,6 @@ return {
 				menuFunc()
 			elseif input:pressed("confirm") then
 				audio.playSound(confirmSound)
-                bfDanceLines:animate("boyfriend confirm", false)
 
 				confirmFunc()
 			elseif input:pressed("back") then
@@ -211,17 +193,14 @@ return {
 
 				graphics.setColor(1, 1, 1)
 
-				bfDanceLines:draw()
-				gfDanceLines:draw()
-
 				--weekImages[currentWeek + 1]:draw()
 				graphics.setColorF(freeColour[1], freeColour[2], freeColour[3])
 
 				weekImages:draw()
 
-				love.graphics.color.printf(weekDesc[weekNum], -639, -395, 853, "center", nil, 1.5, 1.5, freeColour[1], freeColour[2], freeColour[3])
+				love.graphics.printf({{freeColour[1], freeColour[2], freeColour[3]}, weekDesc[weekNum]}, -639, -395, 853, "center", nil, 1.5, 1.5)
 
-				love.graphics.color.printf(theTracks, -639, 350, 853, "center", nil, 1.5, 1.5, freeColour[1], freeColour[2], freeColour[3])
+				love.graphics.printf({{freeColour[1], freeColour[2], freeColour[3]}, theTracks}, -639, 350, 853, "center", nil, 1.5, 1.5)
 
 				love.graphics.setColor(0, 0, 0, 0.4)
 

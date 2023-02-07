@@ -15,11 +15,11 @@ function volumeControl()
     if volTween then Timer.cancel(volTween) end
     volTween = Timer.tween(
         0.2, 
-        theBalls, 
+        volumeWidth, 
         {width = fixVol * 160}, 
         "out-quad"
     )
-    love.graphics.rectangle("fill", 1113, 10, theBalls.width, 30)
+    love.graphics.rectangle("fill", 1113, 10, volumeWidth.width, 30)
     graphics.setColor(1, 1, 1, 1)
 end
 

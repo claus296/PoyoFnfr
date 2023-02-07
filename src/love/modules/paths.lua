@@ -1,25 +1,71 @@
+local function endsWith(str, ending)
+    return ending == "" or string.sub(str, -#ending) == ending
+end
+local function isFile(path)
+    local info = love.filesystem.getInfo(path)
+    return info and info.type == "file"
+end
+
 local paths = {}
 
-function paths.get(key) return key end
-
-function paths.file(key)
-    local contents = love.filesystem.read(paths.get(key))
-    return contents
+function paths.getText(key)
+    local path = key
+    if isFile(path) then
+        local contents = love.filesystem.read(path)
+        return contents
+    end
+    return nil
 end
 
-function paths.image(key)
-    return love.graphics.newImage(graphics.imagePath(key))
+function paths.getJSON(key) return decodeJson(paths.getText(key .. ".json")) end
+
+function paths.getImage(key, settings)
+    local settings = settings or {}
+    local path = graphics.imagePath(key)
+    if isFile(path) then
+        local img = love.graphics.newImage(path)
+        if settings.antialiasing == nil or settings.antialiasing then
+            img:setFilter("linear", "linear")
+        elseif not settings.antialiasing then
+            img:setFilter("nearest", "nearest")
+        end
+        return img
+    end
+
+    return nil
 end
 
-function paths.xml(key) return paths.file(key .. ".xml") end
+function paths.getSparrowFrames(key, settings)
+    local xmlKey = "sprites/" .. key .. ".xml"
+    local img, path = paths.getImage(key, settings), xmlKey
+    if img and isFile(path) then
+        return sprite.getFramesFromSparrow(img, paths.getText(xmlKey))
+    end
 
-function paths.sprite(x, y, key)
-    return sprite(
-        x, y
-    ):load(
-        paths.image(key), 
-        paths.xml("sprites/" .. key)
-    )
+    return nil
+end
+
+function paths.getModImage(key)
+    local path = key .. ".png"
+    print(path)
+    if isFile(path) then
+        local img = love.graphics.newImage(path)
+        img:setFilter("linear", "linear")
+        return img
+    end
+
+    return nil
+end
+
+function paths.getModSparrowFrames(key)
+    local xmlKey = key .. ".xml"
+    print(xmlKey)
+    local img, path = paths.getModImage(key), xmlKey
+    if img and isFile(path) then
+        return sprite.getFramesFromSparrow(img, paths.getText(xmlKey))
+    end
+
+    return nil
 end
 
 return paths
